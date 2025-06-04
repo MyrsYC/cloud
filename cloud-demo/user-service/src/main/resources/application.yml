@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   application:
-    name: eurekaservice
+    name: userservice
 
   datasource:
     url: jdbc:mysql://localhost:3306/cloud_user?useSSL=false
