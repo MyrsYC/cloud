@@ -1,14 +1,8 @@
 server:
   port: 8081
 spring:
-  application:
-    name: userservice
-  cloud:
-    nacos:
-      server-addr: localhost:8848
-      discovery:
-        cluster-name: HZ # 集群名称
-
+#      discovery:
+#        cluster-name: HZ # 集群名称
   datasource:
     url: jdbc:mysql://localhost:3306/cloud_user?useSSL=false
     username: root
@@ -27,3 +21,5 @@ logging:
 #  client:
 #    service-url:
 #      defaultZone: http://127.0.0.1:10086/eureka
+pattern:
+  name: 本地环境local
