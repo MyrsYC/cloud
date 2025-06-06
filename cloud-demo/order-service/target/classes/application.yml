@@ -8,7 +8,7 @@ spring:
       server-addr: localhost:8848
       discovery:
         cluster-name: HZ # 集群名称
-        namespace: 9b933364-4910-44a4-b2bd-5812d8dc6b86 # 命名空间，填ID
+#        namespace: 9b933364-4910-44a4-b2bd-5812d8dc6b86 # 命名空间，填ID
         ephemeral: false # 设置为非临时实例
   datasource:
     url: jdbc:mysql://localhost:3306/cloud_order?useSSL=false
@@ -39,3 +39,8 @@ userservice:
 #    enabled: true
 #    clients:
 #      - userservice
+feign:
+  httpclient:
+    enabled: true   #支持HttpClient开关
+    max-connections: 200 #最大连接数
+    max-connections-per-route: 50  #单个路径的最大连接数
