@@ -38,8 +38,17 @@ public class SpringAmqpTest {
         String message="hello,every one!";
         //发送消息
         rabbitTemplate.convertAndSend(exchangeName,"",message);
-
-
     }
+
+    @Test
+    public void testSendDirectExchange(){
+        //交换机名称
+        String exchangeName="itcast.direct";
+        //消息
+        String message="hello,red!";
+        //发送消息
+        rabbitTemplate.convertAndSend(exchangeName,"red",message);
+    }
+
 
 }
