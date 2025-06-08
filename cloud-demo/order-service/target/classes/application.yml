@@ -5,13 +5,13 @@ spring:
     name: orderservice
   cloud:
     nacos:
-      server-addr: localhost:8848
+      server-addr: nacos:8848
       discovery:
         cluster-name: HZ # 集群名称
 #        namespace: 9b933364-4910-44a4-b2bd-5812d8dc6b86 # 命名空间，填ID
 #        ephemeral: false # 设置为非临时实例
   datasource:
-    url: jdbc:mysql://localhost:3306/cloud_order?useSSL=false
+    url: jdbc:mysql://mysql:3306/cloud_order?useSSL=false
     username: root
     password: yc741250
     driver-class-name: com.mysql.cj.jdbc.Driver
