@@ -12,6 +12,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -36,16 +37,14 @@ public class HotelService extends ServiceImpl<HotelMapper, Hotel> implements IHo
             SearchRequest request = new SearchRequest("hotel");
             //2.准备DSL
             //2.1 query
-            String key=params.getKey();
-            if (key==null|| key.isEmpty()){
-                request.source().query(QueryBuilders.matchAllQuery());
-            }else{
-                request.source().query(QueryBuilders.matchQuery("all",key));
-            }
+            //构建BooleanQuery
+            buildBasicQuery(params, request);
+
             //2.2 分页
             int page=params.getPage();
             int size=params.getSize();
             request.source().from((page-1)*size).size(size);
+
             //3.发送请求
             SearchResponse response = client.search(request, RequestOptions.DEFAULT);
             //4.解析结果
@@ -53,6 +52,39 @@ public class HotelService extends ServiceImpl<HotelMapper, Hotel> implements IHo
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void buildBasicQuery(RequestParams params, SearchRequest request) {
+        BoolQueryBuilder boolQuery =QueryBuilders.boolQuery();
+        //关键字搜索
+        String key= params.getKey();
+        if (key==null|| key.isEmpty()){
+            boolQuery.must(QueryBuilders.matchAllQuery());
+        }else{
+            boolQuery.must(QueryBuilders.matchQuery("all",key));
+        }
+        //城市条件
+        String city= params.getCity();
+        if (city!=null&&!city.isEmpty()) {
+            boolQuery.filter(QueryBuilders.termQuery("city",city));
+        }
+        //品牌条件
+        String brand= params.getBrand();
+        if (brand!=null&&!brand.isEmpty()) {
+            boolQuery.filter(QueryBuilders.termQuery("brand",brand));
+        }
+        //星级条件
+        String starName= params.getStarName();
+        if (starName!=null&&!starName.isEmpty()) {
+            boolQuery.filter(QueryBuilders.termQuery("starName",starName));
+        }
+        //价格范围
+        Integer minPrice = params.getMinPrice();
+        Integer maxPrice = params.getMaxPrice();
+        if (minPrice!=null&&maxPrice!=null) {
+            boolQuery.filter(QueryBuilders.rangeQuery("price").lte(maxPrice).gte(minPrice));
+        }
+        request.source().query(boolQuery);
     }
 
     private PageResult handleResponse(SearchResponse response) {
@@ -70,6 +102,7 @@ public class HotelService extends ServiceImpl<HotelMapper, Hotel> implements IHo
             String json = hit.getSourceAsString();
             //反序列化
             HotelDoc hotelDoc = JSON.parseObject(json, HotelDoc.class);
+
             hotels.add(hotelDoc);
         }
         //4.4 封装返回
