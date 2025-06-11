@@ -72,12 +72,14 @@ public class HotelService extends ServiceImpl<HotelMapper, Hotel> implements IHo
     }
 
     @Override
-    public Map<String, List<String>> filters() {
+    public Map<String, List<String>> filters(RequestParams params) {
         try {
             //1.准备Request
             SearchRequest request = new SearchRequest("hotel");
             //2.准备DSL
-            //2.1设置size
+            //2.1 query
+            buildBasicQuery(params, request);
+            //2.2设置size
             request.source().size(0);
             //2.2聚合
             buildAggregation(request);

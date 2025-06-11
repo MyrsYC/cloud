@@ -26,8 +26,8 @@ public class HotelController {
     }
 
     @PostMapping("/filters")
-    public Map<String, List<String>> filters(@RequestBody RequestParams params){
+    public Map<String, List<String>> getFilters(@RequestBody RequestParams params){
 
-        return hotelService.filters();
+        return hotelService.filters(params);
     }
 }

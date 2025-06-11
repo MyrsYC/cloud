@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-import java.util.Map;
+
 
 @SpringBootTest
 class HotelDemoApplicationTests {
@@ -16,8 +15,8 @@ class HotelDemoApplicationTests {
 
     @Test
     void contextLoads() {
-        Map<String, List<String>> filters=hotelService.filters();
-        System.out.println(filters);
+//        Map<String, List<String>> filters=hotelService.filters();
+//        System.out.println(filters);
     }
 
 }

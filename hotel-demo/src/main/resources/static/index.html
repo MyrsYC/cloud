@@ -48,14 +48,14 @@
     <div class="selected-ops">
       <div class="open">全部结果：</div>
       <div class="selected-op" v-for="(v, k) in params.filters" :key="k" @click="deleteFilter(k)">
-        {{filterNames[k]}}：<span>{{v}} <span class='close'>×</span></span>
+        {{k}}：<span>{{v}} <span class='close'>×</span></span>
       </div>
     </div>
     <!--过滤项-->
     <div class="filter-list">
       <div v-for="(v, k) in remainFilter" :key="k">
         <div class="filter-box">
-          <div class="f-key"><strong>{{filterNames[k]}}</strong></div>
+          <div class="f-key"><strong>{{k}}</strong></div>
           <div class="column-divider"></div>
           <div class="f-items">
             <div class="f-item" @click="clickFilter(k, o)" v-for="(o, j) in v" :key="j"><a href="javascript:void(0)">
