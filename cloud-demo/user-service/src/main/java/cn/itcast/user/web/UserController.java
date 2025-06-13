@@ -5,8 +5,6 @@ import cn.itcast.user.pojo.User;
 import cn.itcast.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -33,7 +31,7 @@ public class UserController {
     }
     /**
      * 检验读取nacos中的配置
-     * @return
+     * @return 日期
      */
     @GetMapping("now")
     public String now(){
@@ -48,8 +46,14 @@ public class UserController {
          * @return 用户
          */
     @GetMapping("/{id}")
-    public User queryById(@PathVariable("id") Long id,@RequestHeader(value= "Truth", required =false) String truth) {
-        System.out.println("truth: "+truth);
+    public User queryById(@PathVariable("id") Long id,@RequestHeader(value= "Truth", required =false) String truth) throws InterruptedException {
+        if(id==1){
+            //休眠，触发熔断
+            Thread.sleep(60);
+        } else if (id==2) {
+            //抛出异常，触发熔断
+            throw new RuntimeException("故意出错，触发异常");
+        }
         return userService.queryById(id);
     }
 }
