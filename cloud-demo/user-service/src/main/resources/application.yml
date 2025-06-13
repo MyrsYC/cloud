@@ -4,7 +4,7 @@ spring:
 #      discovery:
 #        cluster-name: HZ # 集群名称
   datasource:
-    url: jdbc:mysql://mysql:3306/cloud_user?useSSL=false
+    url: jdbc:mysql://localhost:3306/cloud_user?useSSL=false
     username: root
     password: yc741250
     driver-class-name: com.mysql.cj.jdbc.Driver

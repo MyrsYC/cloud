@@ -1,17 +1,21 @@
 server:
-  port: 8080
+  port: 8088
 spring:
   application:
     name: orderservice
   cloud:
     nacos:
-      server-addr: nacos:8848
+      server-addr: localhost:8848
       discovery:
         cluster-name: HZ # 集群名称
 #        namespace: 9b933364-4910-44a4-b2bd-5812d8dc6b86 # 命名空间，填ID
 #        ephemeral: false # 设置为非临时实例
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      web-context-unify: false # 关闭context整合,用于链路流控模式
   datasource:
-    url: jdbc:mysql://mysql:3306/cloud_order?useSSL=false
+    url: jdbc:mysql://localhost:3306/cloud_order?useSSL=false
     username: root
     password: yc741250
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -44,3 +48,5 @@ feign:
     enabled: true   #支持HttpClient开关
     max-connections: 200 #最大连接数
     max-connections-per-route: 50  #单个路径的最大连接数
+  sentinel:
+    enabled: true # 开启feign对sentinel的支持

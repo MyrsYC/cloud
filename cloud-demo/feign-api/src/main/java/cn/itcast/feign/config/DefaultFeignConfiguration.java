@@ -1,5 +1,6 @@
 package cn.itcast.feign.config;
 
+import cn.itcast.feign.clients.fallback.UserClientFallbackFactory;
 import feign.Logger;
 import org.springframework.context.annotation.Bean;
 
@@ -8,4 +9,10 @@ public class DefaultFeignConfiguration {
     public Logger.Level loglevel(){
         return Logger.Level.BASIC;
     }
+
+    @Bean
+    public UserClientFallbackFactory userClientFallbackFactory(){
+        return new UserClientFallbackFactory();
+    }
+
 }
