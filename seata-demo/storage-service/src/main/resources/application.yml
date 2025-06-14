@@ -5,7 +5,7 @@ spring:
     name: storage-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql:///seata_demo?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql:///seata_demo?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
     username: root
     password: yc741250
   cloud:
@@ -38,3 +38,4 @@ seata:
   service:
     vgroup-mapping: # 事务组与cluster的映射关系
       seata-demo: SH
+  data-source-proxy-mode: XA
