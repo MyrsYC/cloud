@@ -8,6 +8,9 @@ spring:
     username: root
     password: 123
     driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 192.168.137.28
+    port: 6381
 mybatis-plus:
   type-aliases-package: com.heima.item.pojo
   configuration:
@@ -21,3 +24,6 @@ logging:
     com.heima: debug
   pattern:
     dateformat: HH:mm:ss:SSS
+canal:
+  destination: heima # canal的集群名字，要与安装canal时设置的名称一致
+  server: 192.168.137.28:11111 # canal服务地址
