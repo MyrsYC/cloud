@@ -13,3 +13,4 @@ spring:
     listener:
       simple:
         prefetch: 1
+        acknowledge-mode: auto
