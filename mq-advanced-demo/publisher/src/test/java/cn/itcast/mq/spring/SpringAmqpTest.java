@@ -59,4 +59,35 @@ public class SpringAmqpTest {
         //2. 发送消息
         rabbitTemplate.convertAndSend("simple.queue",message);
     }
+
+    @Test
+    public void testTTLMessage(){
+        //1. 准备消息
+        Message message = MessageBuilder.
+                withBody("hello, Spring ".getBytes(StandardCharsets.UTF_8))
+                .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
+                .setExpiration("5000")
+                .build();
+        //2. 发送消息
+        rabbitTemplate.convertAndSend("ttl.direct","ttl",message);
+        log.info("消息已经成功发送");
+    }
+
+
+    @Test
+    public void testSendDelayMessage()  {
+
+        //1. 准备消息
+        Message message = MessageBuilder.
+                withBody("hello, Spring ".getBytes(StandardCharsets.UTF_8))
+                .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
+                .setHeader("x-delay",5000)
+                .build();
+        //2 准备CorrelationData
+        CorrelationData correlationData=new CorrelationData(UUID.randomUUID().toString());
+
+        //3. 发送消息
+        rabbitTemplate.convertAndSend("delay.direct", "delay", message, correlationData);
+        log.info("发送消息成功");
+    }
 }
