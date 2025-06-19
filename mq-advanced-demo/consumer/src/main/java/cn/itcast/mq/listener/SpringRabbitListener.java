@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class SpringRabbitListener {
-
+/*
     @RabbitListener(queues = "simple.queue")
     public void listenSimpleQueue(String msg) {
 
@@ -18,7 +18,7 @@ public class SpringRabbitListener {
         System.out.println(1/0);
         log.info("消费者处理成功！");
     }
-
+*/
     @RabbitListener(bindings = @QueueBinding(
             value=@Queue(name = "dl.queue",durable = "true"),
             exchange = @Exchange(name = "dl.direct"),
@@ -27,7 +27,7 @@ public class SpringRabbitListener {
     public void listenDlQueue(){
         log.info("消费者接收到了dl.queue的延迟消息");
     }
-
+/*
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(value = "delay.queue",durable = "true"),
             exchange = @Exchange(name = "delay.direct",delayed = "true"),
@@ -36,6 +36,6 @@ public class SpringRabbitListener {
     public void listenDelayExchange(){
         log.info("消费者接收到了delay.queue的延迟消息");
     }
-
+*/
 
 }
