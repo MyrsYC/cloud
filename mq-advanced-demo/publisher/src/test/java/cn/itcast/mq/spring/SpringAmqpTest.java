@@ -90,4 +90,36 @@ public class SpringAmqpTest {
         rabbitTemplate.convertAndSend("delay.direct", "delay", message, correlationData);
         log.info("发送消息成功");
     }
+
+
+    @Test
+    public void testLazyQueue()  {
+        for (int i = 0; i < 100000; i++) {
+            //1. 准备消息
+            Message message = MessageBuilder.
+                    withBody("hello, Spring ".getBytes(StandardCharsets.UTF_8))
+                    .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
+                    .build();
+
+            //3. 发送消息
+            rabbitTemplate.convertAndSend("lazy.queue", message);
+            log.info("发送消息成功");
+        }
+    }
+
+    @Test
+    public void testNormaQueue()  {
+        for (int i = 0; i < 100000; i++) {
+            //1. 准备消息
+            Message message = MessageBuilder.
+                    withBody("hello, Spring ".getBytes(StandardCharsets.UTF_8))
+                    .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
+                    .build();
+
+            //3. 发送消息
+            rabbitTemplate.convertAndSend("norma.queue", message);
+            log.info("发送消息成功");
+        }
+
+    }
 }
